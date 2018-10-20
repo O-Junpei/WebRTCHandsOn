@@ -1,24 +1,28 @@
 PODS:
+  - Alamofire (4.7.3)
   - Starscream (2.0.4)
   - SwiftyJSON (3.1.4)
   - WebRTC (58.17.16937)
 
 DEPENDENCIES:
+  - Alamofire (~> 4.7)
   - Starscream (~> 2.0.3)
   - SwiftyJSON
   - WebRTC (= 58.17.16937)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - Alamofire
     - Starscream
     - SwiftyJSON
     - WebRTC
 
 SPEC CHECKSUMS:
+  Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
   Starscream: df5974ee928b157c8eda8af8de7c620276b7dfcc
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   WebRTC: 1e9a85bf75509eec44be6478c64e9de65ac82332
 
-PODFILE CHECKSUM: 5386473cb1c94472a28982f396d2042aa2815445
+PODFILE CHECKSUM: 7eca3e589628aa468095fe55eea8759337be20a7
 
 COCOAPODS: 1.5.3

@@ -1,18 +1,11 @@
-//
-//  ChatViewController.swift
-//  WebRTCHandsOn
-//
-//  Created by Takumi Minamoto on 2017/05/27.
-//  Copyright © 2017 tnoho. All rights reserved.
-//
-
 import UIKit
 import WebRTC
 import Starscream
 import SwiftyJSON
+import Alamofire
 
 class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnectionDelegate, RTCEAGLVideoViewDelegate {
-    var websocket: WebSocket! = nil
+    //var websocket: WebSocket! = nil
 
 
 
@@ -34,10 +27,15 @@ class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnection
         startVideo()
 
 
-        websocket = WebSocket(url: URL(string:
-                "wss://conf.space/WebRTCHandsOnSig/onojun")!)
-        websocket.delegate = self
-        websocket.connect()
+        //websocket = WebSocket(url: URL(string: "wss://conf.space/WebRTCHandsOnSig/onojun")!)
+        //websocket.delegate = self
+        //websocket.connect()
+        
+        let readAnswerSDPButton: UIButton = UIButton()
+        readAnswerSDPButton.setTitle("readAnswerSDP", for: .normal)
+        readAnswerSDPButton.backgroundColor = UIColor.red
+        readAnswerSDPButton.frame = CGRect(x: 20, y: 100, width: 160, height: 40)
+        view.addSubview(readAnswerSDPButton)
 
     }
 
@@ -86,16 +84,6 @@ class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnection
             })
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
     @IBAction func hangupButtonAction(_ sender: Any) {
         //HangUpボタンを押した時
         hangUp()
@@ -104,7 +92,7 @@ class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnection
     @IBAction func closeButtonAction(_ sender: Any) {
         // Closeボタンを押した時
         hangUp()
-        websocket.disconnect()
+        //websocket.disconnect()
         _ = self.navigationController?.popToRootViewController(animated: true)
     }
 
@@ -117,7 +105,7 @@ class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnection
                     "type": "close"
                 ]
                 LOG("sending close message")
-                websocket.write(string: jsonClose.rawString()!)
+                //websocket.write(string: jsonClose.rawString()!)
             }
             remoteVideoTrack = nil
             peerConnection = nil
@@ -137,7 +125,7 @@ class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnection
         ]
         let message = jsonCandidate.rawString()!
         LOG("sending candidate=" + message)
-        websocket.write(string: message)
+       // websocket.write(string: message)
     }
 
     func sendSDP(_ desc: RTCSessionDescription) {
@@ -149,9 +137,26 @@ class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnection
         ]
         // JSONを生成
         let message = jsonSdp.rawString()!
-        LOG("sending SDP=" + message)
+        //LOG("sending SDP=" + message)
         // 相手に送信
-        websocket.write(string: message)
+        print("@@@@@@@@@@")
+        print(message)
+        print("@@@@@@@@@@")
+        
+        // ここでSetOfferにSDPをPostする
+        //
+        let parameters: Parameters = [
+            "name": "onojun",
+            "offer_sdp": desc.sdp
+        ]
+        Alamofire.request("https://swiswiswift.com/contents/chat/set-answer.php", method: .post, parameters: parameters, encoding: URLEncoding.default).responseJSON { response in
+            if let result = response.result.value as? [String: Any] {
+                print(result)
+            }
+        }
+        
+        
+        //websocket.write(string: message)
     }
 
     func makeOffer() {
@@ -291,6 +296,13 @@ class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnection
             return
         }
     }
+    
+    
+    
+    
+    
+    
+    
     
     func setOffer(_ offer: RTCSessionDescription) {
         if peerConnection != nil {

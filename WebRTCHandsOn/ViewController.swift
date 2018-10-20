@@ -1,24 +1,31 @@
-//
-//  ViewController.swift
-//  WebRTCHandsOn
-//
-//  Created by Takumi Minamoto on 2017/05/27.
-//  Copyright © 2017 tnoho. All rights reserved.
-//
-
 import UIKit
+import Alamofire
 
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        // まずPOSTで送信したい情報をセット。
+        let str = "name=taro&pw=tarospw"
+        let strData = str.data(using: String.Encoding.utf8)
+        
+        
+        var url = NSURL(string: "http://hoge.com/api.php")
+        var request = NSMutableURLRequest(url: url as! URL)
+        
+        // この下二行を見つけるのに、少々てこずりました。
+        request.httpMethod = "POST"
+        request.httpBody = strData
+
+        do {
+            var data = try NSURLConnection.sendSynchronousRequest(request as URLRequest, returning: nil)
+        } catch {
+            // エラー処理
+        }
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+
     
     @IBAction func connectButtonAction(_ sender: Any) {
         self.performSegue(withIdentifier: "joinToRoom", sender: nil)
