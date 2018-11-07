@@ -2,10 +2,9 @@ import UIKit
 import WebRTC
 import Starscream
 import SwiftyJSON
-import Alamofire
 
 class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnectionDelegate, RTCEAGLVideoViewDelegate {
-    //var websocket: WebSocket! = nil
+    var websocket: WebSocket! = nil
 
 
 
@@ -27,9 +26,9 @@ class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnection
         startVideo()
 
 
-        //websocket = WebSocket(url: URL(string: "wss://conf.space/WebRTCHandsOnSig/onojun")!)
-        //websocket.delegate = self
-        //websocket.connect()
+        websocket = WebSocket(url: URL(string: "wss://simple-video-chat.work/socket/onojun")!)
+        websocket.delegate = self
+        websocket.connect()
         
         let readAnswerSDPButton: UIButton = UIButton()
         readAnswerSDPButton.setTitle("readAnswerSDP", for: .normal)
@@ -92,7 +91,7 @@ class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnection
     @IBAction func closeButtonAction(_ sender: Any) {
         // Closeボタンを押した時
         hangUp()
-        //websocket.disconnect()
+        websocket.disconnect()
         _ = self.navigationController?.popToRootViewController(animated: true)
     }
 
@@ -105,7 +104,7 @@ class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnection
                     "type": "close"
                 ]
                 LOG("sending close message")
-                //websocket.write(string: jsonClose.rawString()!)
+                websocket.write(string: jsonClose.rawString()!)
             }
             remoteVideoTrack = nil
             peerConnection = nil
@@ -125,7 +124,7 @@ class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnection
         ]
         let message = jsonCandidate.rawString()!
         LOG("sending candidate=" + message)
-       // websocket.write(string: message)
+       websocket.write(string: message)
     }
 
     func sendSDP(_ desc: RTCSessionDescription) {
@@ -137,12 +136,14 @@ class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnection
         ]
         // JSONを生成
         let message = jsonSdp.rawString()!
-        //LOG("sending SDP=" + message)
+        LOG("sending SDP=" + message)
         // 相手に送信
         print("@@@@@@@@@@")
         print(message)
         print("@@@@@@@@@@")
         
+        
+        /*
         // ここでSetOfferにSDPをPostする
         //
         let parameters: Parameters = [
@@ -154,9 +155,9 @@ class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnection
                 print(result)
             }
         }
+        */
         
-        
-        //websocket.write(string: message)
+        websocket.write(string: message)
     }
 
     func makeOffer() {

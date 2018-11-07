@@ -9,5 +9,4 @@ target 'simple-video-chat-ios' do
   pod 'WebRTC', '58.17.16937'
   pod 'Starscream', '~> 2.0.3'
   pod 'SwiftyJSON'
-  pod 'Alamofire', '~> 4.7'
 end

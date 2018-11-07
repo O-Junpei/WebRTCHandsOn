@@ -88,11 +88,11 @@
 			children = (
 				E93377F91ED962BB0011FBC1 /* AppDelegate.swift */,
 				E93377FB1ED962BB0011FBC1 /* ViewController.swift */,
+				E93829161ED9BFF000FD4E46 /* ChatViewController.swift */,
 				E93377FD1ED962BB0011FBC1 /* Main.storyboard */,
 				E93378001ED962BB0011FBC1 /* Assets.xcassets */,
 				E93378021ED962BB0011FBC1 /* LaunchScreen.storyboard */,
 				E93378051ED962BB0011FBC1 /* Info.plist */,
-				E93829161ED9BFF000FD4E46 /* ChatViewController.swift */,
 			);
 			path = "simple-video-chat-ios";
 			sourceTree = "<group>";
@@ -175,14 +175,12 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-simple-video-chat-ios/Pods-simple-video-chat-ios-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${PODS_ROOT}/WebRTC/WebRTC.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WebRTC.framework",

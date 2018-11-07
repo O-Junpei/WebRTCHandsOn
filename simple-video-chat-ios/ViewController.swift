@@ -1,10 +1,11 @@
 import UIKit
-import Alamofire
 
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        /*
         // Do any additional setup after loading the view, typically from a nib.
         // まずPOSTで送信したい情報をセット。
         let str = "name=taro&pw=tarospw"
@@ -23,6 +24,7 @@ class ViewController: UIViewController {
         } catch {
             // エラー処理
         }
+ */
     }
 
 
