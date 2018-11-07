@@ -68,7 +68,7 @@
 		E93377ED1ED962BB0011FBC1 = {
 			isa = PBXGroup;
 			children = (
-				E93377F81ED962BB0011FBC1 /* WebRTCHandsOn */,
+				E93377F81ED962BB0011FBC1 /* simple-video-chat-ios */,
 				E93377F71ED962BB0011FBC1 /* Products */,
 				20593083E8AB6F86C8D63440 /* Pods */,
 				A6F0007126D66892EE13215B /* Frameworks */,
@@ -83,7 +83,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		E93377F81ED962BB0011FBC1 /* WebRTCHandsOn */ = {
+		E93377F81ED962BB0011FBC1 /* simple-video-chat-ios */ = {
 			isa = PBXGroup;
 			children = (
 				E93377F91ED962BB0011FBC1 /* AppDelegate.swift */,
@@ -94,7 +94,7 @@
 				E93378051ED962BB0011FBC1 /* Info.plist */,
 				E93829161ED9BFF000FD4E46 /* ChatViewController.swift */,
 			);
-			path = WebRTCHandsOn;
+			path = "simple-video-chat-ios";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -349,7 +349,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5RH346BQ66;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = WebRTCHandsOn/Info.plist;
+				INFOPLIST_FILE = "simple-video-chat-ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tnoho.WebRTCHandsOn;
@@ -368,7 +368,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5RH346BQ66;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = WebRTCHandsOn/Info.plist;
+				INFOPLIST_FILE = "simple-video-chat-ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tnoho.WebRTCHandsOn;
