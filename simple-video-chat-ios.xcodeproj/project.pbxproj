@@ -7,20 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		864724BDFA2FD4F613B8302B /* Pods_WebRTCHandsOn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF10745FA17AD353468CD464 /* Pods_WebRTCHandsOn.framework */; };
 		E93377FA1ED962BB0011FBC1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93377F91ED962BB0011FBC1 /* AppDelegate.swift */; };
 		E93377FC1ED962BB0011FBC1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93377FB1ED962BB0011FBC1 /* ViewController.swift */; };
 		E93377FF1ED962BB0011FBC1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E93377FD1ED962BB0011FBC1 /* Main.storyboard */; };
 		E93378011ED962BB0011FBC1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E93378001ED962BB0011FBC1 /* Assets.xcassets */; };
 		E93378041ED962BB0011FBC1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E93378021ED962BB0011FBC1 /* LaunchScreen.storyboard */; };
 		E93829171ED9BFF000FD4E46 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93829161ED9BFF000FD4E46 /* ChatViewController.swift */; };
+		EAC32FD2CF7095081C54D3A9 /* Pods_simple_video_chat_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF019230F98A3C176D6BD623 /* Pods_simple_video_chat_ios.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		03F38ACDCCCA487C8D52C7EC /* Pods-WebRTCHandsOn.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WebRTCHandsOn.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WebRTCHandsOn/Pods-WebRTCHandsOn.debug.xcconfig"; sourceTree = "<group>"; };
+		06AB881D8A940A9DA8C9CBB1 /* Pods-simple-video-chat-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-simple-video-chat-ios.release.xcconfig"; path = "Pods/Target Support Files/Pods-simple-video-chat-ios/Pods-simple-video-chat-ios.release.xcconfig"; sourceTree = "<group>"; };
 		28A9AF4405E953428B143A23 /* Pods-WebRTCHandsOn.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WebRTCHandsOn.release.xcconfig"; path = "Pods/Target Support Files/Pods-WebRTCHandsOn/Pods-WebRTCHandsOn.release.xcconfig"; sourceTree = "<group>"; };
 		AF10745FA17AD353468CD464 /* Pods_WebRTCHandsOn.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WebRTCHandsOn.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E93377F61ED962BB0011FBC1 /* WebRTCHandsOn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebRTCHandsOn.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B9F2D3E6B78F274D4CDFC205 /* Pods-simple-video-chat-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-simple-video-chat-ios.debug.xcconfig"; path = "Pods/Target Support Files/Pods-simple-video-chat-ios/Pods-simple-video-chat-ios.debug.xcconfig"; sourceTree = "<group>"; };
+		BF019230F98A3C176D6BD623 /* Pods_simple_video_chat_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_simple_video_chat_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E93377F61ED962BB0011FBC1 /* simple-video-chat-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "simple-video-chat-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E93377F91ED962BB0011FBC1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E93377FB1ED962BB0011FBC1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		E93377FE1ED962BB0011FBC1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -35,7 +38,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				864724BDFA2FD4F613B8302B /* Pods_WebRTCHandsOn.framework in Frameworks */,
+				EAC32FD2CF7095081C54D3A9 /* Pods_simple_video_chat_ios.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -47,6 +50,8 @@
 			children = (
 				03F38ACDCCCA487C8D52C7EC /* Pods-WebRTCHandsOn.debug.xcconfig */,
 				28A9AF4405E953428B143A23 /* Pods-WebRTCHandsOn.release.xcconfig */,
+				B9F2D3E6B78F274D4CDFC205 /* Pods-simple-video-chat-ios.debug.xcconfig */,
+				06AB881D8A940A9DA8C9CBB1 /* Pods-simple-video-chat-ios.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -55,6 +60,7 @@
 			isa = PBXGroup;
 			children = (
 				AF10745FA17AD353468CD464 /* Pods_WebRTCHandsOn.framework */,
+				BF019230F98A3C176D6BD623 /* Pods_simple_video_chat_ios.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -72,7 +78,7 @@
 		E93377F71ED962BB0011FBC1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E93377F61ED962BB0011FBC1 /* WebRTCHandsOn.app */,
+				E93377F61ED962BB0011FBC1 /* simple-video-chat-ios.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -94,9 +100,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E93377F51ED962BB0011FBC1 /* WebRTCHandsOn */ = {
+		E93377F51ED962BB0011FBC1 /* simple-video-chat-ios */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E93378081ED962BB0011FBC1 /* Build configuration list for PBXNativeTarget "WebRTCHandsOn" */;
+			buildConfigurationList = E93378081ED962BB0011FBC1 /* Build configuration list for PBXNativeTarget "simple-video-chat-ios" */;
 			buildPhases = (
 				CDDD50B796CFF6C57BD56779 /* [CP] Check Pods Manifest.lock */,
 				E93377F21ED962BB0011FBC1 /* Sources */,
@@ -108,9 +114,9 @@
 			);
 			dependencies = (
 			);
-			name = WebRTCHandsOn;
+			name = "simple-video-chat-ios";
 			productName = WebRTCHandsOn;
-			productReference = E93377F61ED962BB0011FBC1 /* WebRTCHandsOn.app */;
+			productReference = E93377F61ED962BB0011FBC1 /* simple-video-chat-ios.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -130,7 +136,7 @@
 					};
 				};
 			};
-			buildConfigurationList = E93377F11ED962BB0011FBC1 /* Build configuration list for PBXProject "WebRTCHandsOn" */;
+			buildConfigurationList = E93377F11ED962BB0011FBC1 /* Build configuration list for PBXProject "simple-video-chat-ios" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -143,7 +149,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E93377F51ED962BB0011FBC1 /* WebRTCHandsOn */,
+				E93377F51ED962BB0011FBC1 /* simple-video-chat-ios */,
 			);
 		};
 /* End PBXProject section */
@@ -168,7 +174,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-WebRTCHandsOn/Pods-WebRTCHandsOn-frameworks.sh",
+				"${SRCROOT}/Pods/Target Support Files/Pods-simple-video-chat-ios/Pods-simple-video-chat-ios-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
@@ -183,7 +189,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WebRTCHandsOn/Pods-WebRTCHandsOn-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-simple-video-chat-ios/Pods-simple-video-chat-ios-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		CDDD50B796CFF6C57BD56779 /* [CP] Check Pods Manifest.lock */ = {
@@ -197,7 +203,7 @@
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-WebRTCHandsOn-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-simple-video-chat-ios-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -336,7 +342,7 @@
 		};
 		E93378091ED962BB0011FBC1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 03F38ACDCCCA487C8D52C7EC /* Pods-WebRTCHandsOn.debug.xcconfig */;
+			baseConfigurationReference = B9F2D3E6B78F274D4CDFC205 /* Pods-simple-video-chat-ios.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -355,7 +361,7 @@
 		};
 		E933780A1ED962BB0011FBC1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 28A9AF4405E953428B143A23 /* Pods-WebRTCHandsOn.release.xcconfig */;
+			baseConfigurationReference = 06AB881D8A940A9DA8C9CBB1 /* Pods-simple-video-chat-ios.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -375,7 +381,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E93377F11ED962BB0011FBC1 /* Build configuration list for PBXProject "WebRTCHandsOn" */ = {
+		E93377F11ED962BB0011FBC1 /* Build configuration list for PBXProject "simple-video-chat-ios" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E93378061ED962BB0011FBC1 /* Debug */,
@@ -384,7 +390,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E93378081ED962BB0011FBC1 /* Build configuration list for PBXNativeTarget "WebRTCHandsOn" */ = {
+		E93378081ED962BB0011FBC1 /* Build configuration list for PBXNativeTarget "simple-video-chat-ios" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E93378091ED962BB0011FBC1 /* Debug */,
