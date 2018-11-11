@@ -14,6 +14,10 @@ class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnection
     var peerConnection: RTCPeerConnection! = nil
     var remoteVideoTrack: RTCVideoTrack?
 
+    var callBtn:UIButton!
+    var callEndBtn:UIButton!
+    var closeBtn:UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         remoteVideoView.delegate = self
@@ -24,8 +28,62 @@ class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnection
         websocket = WebSocket(url: URL(string: "wss://simple-video-chat.work/socket/onojun")!)
         websocket.delegate = self
         websocket.connect()
+        
+        // button
+        
+        //ボタンの生成
+        callBtn = UIButton()
+        callBtn.backgroundColor = UIColor.gray
+        callBtn.frame = CGRect(x: 20, y: 100, width: 80, height: 80)
+        callBtn.addTarget(self, action: #selector(callBtnTapped(sender:)), for:.touchUpInside)
+        callBtn.layer.masksToBounds = true
+        callBtn.layer.cornerRadius = 40
+        callBtn.setImage(UIImage(named: "call"), for: .normal)
+        view.addSubview(callBtn)
+        
+        callEndBtn = UIButton()
+        callEndBtn.backgroundColor = UIColor.gray
+        callEndBtn.frame = CGRect(x: 120, y: 100, width: 80, height: 80)
+        callEndBtn.addTarget(self, action: #selector(callEndBtnTapped(sender:)), for:.touchUpInside)
+        callEndBtn.layer.masksToBounds = true
+        callEndBtn.layer.cornerRadius = 40
+        callEndBtn.setImage(UIImage(named: "call-end"), for: .normal)
+        view.addSubview(callEndBtn)
+        
+        closeBtn = UIButton()
+        closeBtn.backgroundColor = UIColor.gray
+        closeBtn.frame = CGRect(x: 120, y: 300, width: 100, height: 100)
+        closeBtn.addTarget(self, action: #selector(closeBtnTapped(sender:)), for:.touchUpInside)
+        view.addSubview(closeBtn)
+        
     }
 
+    // MARK: Button Actions
+    func callBtnTapped(sender: UIButton){
+        print("basicButtonBtnClicked")
+        // Connectボタンを押した時
+        if peerConnection == nil {
+            LOG("make Offer")
+            makeOffer()
+        } else {
+            LOG("peer already exist.")
+        }
+    }
+    
+    func callEndBtnTapped(sender: UIButton){
+        print("basicButtonBtnClicked")
+        //HangUpボタンを押した時
+        hangUp()
+    }
+    
+    func closeBtnTapped(sender: UIButton){
+        print("basicButtonBtnClicked")
+        hangUp()
+        websocket.disconnect()
+        _ = self.navigationController?.popToRootViewController(animated: true)
+    }
+    
+    
     deinit {
         if peerConnection != nil {
             hangUp()
@@ -37,16 +95,6 @@ class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnection
 
     func LOG(_ body: String = "", function: String = #function, line: Int = #line) {
         print("[\(function) : \(line)] \(body)")
-    }
-
-    @IBAction func connectButtonAction(_ sender: Any) {
-        // Connectボタンを押した時
-        if peerConnection == nil {
-            LOG("make Offer")
-            makeOffer()
-        } else {
-            LOG("peer already exist.")
-        }
     }
 
     func setAnswer(_ answer: RTCSessionDescription) {
@@ -64,18 +112,6 @@ class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnection
                     self.LOG("setRemoteDescription(answer) ERROR: " + error.debugDescription)
                 }
             })
-    }
-
-    @IBAction func hangupButtonAction(_ sender: Any) {
-        //HangUpボタンを押した時
-        hangUp()
-    }
-
-    @IBAction func closeButtonAction(_ sender: Any) {
-        // Closeボタンを押した時
-        hangUp()
-        websocket.disconnect()
-        _ = self.navigationController?.popToRootViewController(animated: true)
     }
 
 
