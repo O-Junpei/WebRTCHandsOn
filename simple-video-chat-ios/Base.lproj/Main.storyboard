@@ -34,6 +34,7 @@
         <!--Chat View Controller-->
         <scene sceneID="Hau-FH-LSf">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MXO-ID-p6e" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="Erv-cr-jKP" userLabel="Chat View Controller" customClass="ChatViewController" customModule="simple_video_chat_ios" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="7b2-oR-LNo"/>
@@ -42,36 +43,9 @@
                     <view key="view" contentMode="scaleToFill" id="U1b-sh-a1O">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="23X-fE-Gi3" userLabel="Remote Video View" customClass="RTCEAGLVideoView">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JCC-tZ-YXh" userLabel="Local Video View" customClass="RTCCameraPreviewView">
-                                <rect key="frame" x="255" y="40" width="100" height="100"/>
-                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="Oyk-M4-NZZ"/>
-                                    <constraint firstAttribute="width" constant="100" id="yeh-c0-ac9"/>
-                                </constraints>
-                            </view>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="23X-fE-Gi3" secondAttribute="trailing" id="1gW-Mg-Lz5"/>
-                            <constraint firstAttribute="trailing" secondItem="JCC-tZ-YXh" secondAttribute="trailing" constant="20" id="86m-h3-71l"/>
-                            <constraint firstItem="23X-fE-Gi3" firstAttribute="top" secondItem="7b2-oR-LNo" secondAttribute="bottom" id="A4W-6V-pmj"/>
-                            <constraint firstItem="23X-fE-Gi3" firstAttribute="leading" secondItem="U1b-sh-a1O" secondAttribute="leading" id="aYA-Q8-eSm"/>
-                            <constraint firstItem="JCC-tZ-YXh" firstAttribute="top" secondItem="7b2-oR-LNo" secondAttribute="bottom" constant="20" id="fAH-iM-Nqn"/>
-                            <constraint firstItem="xxE-si-1Pd" firstAttribute="top" secondItem="23X-fE-Gi3" secondAttribute="bottom" id="ids-gU-eui"/>
-                        </constraints>
                     </view>
-                    <connections>
-                        <outlet property="cameraPreview" destination="JCC-tZ-YXh" id="Ujb-Z3-tnf"/>
-                        <outlet property="remoteVideoView" destination="23X-fE-Gi3" id="M2G-Hl-lRQ"/>
-                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="MXO-ID-p6e" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="993" y="139"/>
         </scene>

@@ -6,8 +6,8 @@ import SwiftyJSON
 class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnectionDelegate, RTCEAGLVideoViewDelegate {
     var websocket: WebSocket! = nil
 
-    @IBOutlet weak var cameraPreview: RTCCameraPreviewView!
-    @IBOutlet weak var remoteVideoView: RTCEAGLVideoView!
+    var cameraPreview: RTCCameraPreviewView!
+    var remoteVideoView: RTCEAGLVideoView!
     var peerConnectionFactory: RTCPeerConnectionFactory! = nil
     var audioSource: RTCAudioSource?
     var videoSource: RTCAVFoundationVideoSource?
@@ -20,7 +20,19 @@ class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnection
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = .white
+        
+        remoteVideoView = RTCEAGLVideoView()
         remoteVideoView.delegate = self
+        remoteVideoView.frame = view.frame
+        remoteVideoView.backgroundColor = .white
+        
+        view.addSubview(remoteVideoView)
+        
+        cameraPreview = RTCCameraPreviewView()
+        cameraPreview.frame = CGRect(x: view.frame.width - 100, y: 20, width: 60, height: 100)
+        view.addSubview(cameraPreview)
         
         // RTCPeerConnectionFactoryの初期化
         peerConnectionFactory = RTCPeerConnectionFactory()
