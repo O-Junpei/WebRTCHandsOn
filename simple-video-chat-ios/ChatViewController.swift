@@ -6,8 +6,6 @@ import SwiftyJSON
 class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnectionDelegate, RTCEAGLVideoViewDelegate {
     var websocket: WebSocket! = nil
 
-
-
     @IBOutlet weak var cameraPreview: RTCCameraPreviewView!
     @IBOutlet weak var remoteVideoView: RTCEAGLVideoView!
     var peerConnectionFactory: RTCPeerConnectionFactory! = nil
@@ -22,20 +20,10 @@ class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnection
         
         // RTCPeerConnectionFactoryの初期化
         peerConnectionFactory = RTCPeerConnectionFactory()
-
         startVideo()
-
-
         websocket = WebSocket(url: URL(string: "wss://simple-video-chat.work/socket/onojun")!)
         websocket.delegate = self
         websocket.connect()
-        
-        let readAnswerSDPButton: UIButton = UIButton()
-        readAnswerSDPButton.setTitle("readAnswerSDP", for: .normal)
-        readAnswerSDPButton.backgroundColor = UIColor.red
-        readAnswerSDPButton.frame = CGRect(x: 20, y: 100, width: 160, height: 40)
-        view.addSubview(readAnswerSDPButton)
-
     }
 
     deinit {
@@ -45,11 +33,6 @@ class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnection
         audioSource = nil
         videoSource = nil
         peerConnectionFactory = nil
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     func LOG(_ body: String = "", function: String = #function, line: Int = #line) {
@@ -142,21 +125,6 @@ class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnection
         print(message)
         print("@@@@@@@@@@")
         
-        
-        /*
-        // ここでSetOfferにSDPをPostする
-        //
-        let parameters: Parameters = [
-            "name": "onojun",
-            "offer_sdp": desc.sdp
-        ]
-        Alamofire.request("https://swiswiswift.com/contents/chat/set-answer.php", method: .post, parameters: parameters, encoding: URLEncoding.default).responseJSON { response in
-            if let result = response.result.value as? [String: Any] {
-                print(result)
-            }
-        }
-        */
-        
         websocket.write(string: message)
     }
 
@@ -247,7 +215,6 @@ class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnection
 
         return peerConnection
     }
-
 
 
     // MARK: WebSockets
