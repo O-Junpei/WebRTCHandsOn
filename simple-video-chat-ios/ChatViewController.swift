@@ -20,7 +20,6 @@ class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnection
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.backgroundColor = .white
         
         remoteVideoView = RTCEAGLVideoView()

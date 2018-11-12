@@ -7,6 +7,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         
         // UITextFieldの作成
         myTextField = UITextField()
@@ -42,7 +43,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     //basicボタンが押されたら呼ばれます
      func basicButtonClicked(sender: UIButton){
         print("basicButtonBtnClicked")
-        self.performSegue(withIdentifier: "joinToRoom", sender: nil)
+        self.navigationController?.pushViewController(ChatViewController(), animated: true)
     }
     
     //UITextFieldが編集された前に呼ばれる

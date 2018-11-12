@@ -14,11 +14,19 @@ import WebRTC
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var navigationController: UINavigationController?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         RTCInitializeSSL()
+        
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        self.window!.makeKeyAndVisible()
+        let firstViewController = ViewController()
+        navigationController = UINavigationController(rootViewController: firstViewController)
+        navigationController?.setNavigationBarHidden(true, animated: false)
+        window!.rootViewController = navigationController
+        
         return true
     }
 
