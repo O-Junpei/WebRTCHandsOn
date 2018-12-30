@@ -21,12 +21,13 @@ class ViewController: UIViewController, UITextFieldDelegate {
         textField.placeholder = "room name"
         textField.borderStyle = UITextField.BorderStyle.roundedRect
         textField.clearButtonMode = .whileEditing
+        textField.keyboardType = .alphabet
         view.addSubview(textField)
         
         //ボタンの生成
         let basicButton = UIButton()
         basicButton.frame.size = CGSize(width: 260, height: 60)
-        basicButton.backgroundColor = UIColor.gray
+        basicButton.backgroundColor = UIColor.lightGray
         basicButton.center.x = width / 2
         basicButton.center.y = height / 2 + 60
         basicButton.addTarget(self, action: #selector(taped(sender:)), for:.touchUpInside)
@@ -45,7 +46,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
             title = "Room name must be at least 4 letters"
         }
         
-        
         if let title = title {
             let alert: UIAlertController = UIAlertController(title: title, message: "", preferredStyle:  UIAlertController.Style.alert)
             let cancelAction: UIAlertAction = UIAlertAction(title: "close", style: UIAlertAction.Style.cancel, handler:nil)
@@ -53,9 +53,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
             present(alert, animated: true, completion: nil)
             return
         }
-        
-
-        
+    
         let vc = ChatViewController(uri: "wss://simple-video-chat.work/socket/",roomName: text)
         navigationController?.pushViewController(vc, animated: true)
     }
