@@ -7,6 +7,6 @@ target 'simple-video-chat-ios' do
 
   # Pods for WebRTCHandsOn
   pod 'WebRTC'
-  pod 'Starscream', '~> 2.0.3'
+  pod 'Starscream'
   pod 'SwiftyJSON'
 end

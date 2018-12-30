@@ -19,7 +19,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         textField.delegate = self
         textField.textAlignment = .center
         textField.placeholder = "room name"
-        textField.borderStyle = UITextBorderStyle.roundedRect
+        textField.borderStyle = UITextField.BorderStyle.roundedRect
         textField.clearButtonMode = .whileEditing
         view.addSubview(textField)
         
@@ -30,13 +30,13 @@ class ViewController: UIViewController, UITextFieldDelegate {
         basicButton.center.x = width / 2
         basicButton.center.y = height / 2 + 60
         basicButton.addTarget(self, action: #selector(taped(sender:)), for:.touchUpInside)
-        basicButton.setTitle("join room", for: UIControlState.normal)
-        basicButton.setTitleColor(UIColor.white, for: UIControlState.normal)
+        basicButton.setTitle("join room", for: UIControl.State.normal)
+        basicButton.setTitleColor(UIColor.white, for: UIControl.State.normal)
         view.addSubview(basicButton)
     }
 
     //MARK: Button Action
-     func taped(sender: UIButton){
+     @objc func taped(sender: UIButton){
         var title:String!
         let text = textField.text!
         if text.isEmpty {
@@ -47,8 +47,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         
         if let title = title {
-            let alert: UIAlertController = UIAlertController(title: title, message: "", preferredStyle:  UIAlertControllerStyle.alert)
-            let cancelAction: UIAlertAction = UIAlertAction(title: "close", style: UIAlertActionStyle.cancel, handler:nil)
+            let alert: UIAlertController = UIAlertController(title: title, message: "", preferredStyle:  UIAlertController.Style.alert)
+            let cancelAction: UIAlertAction = UIAlertAction(title: "close", style: UIAlertAction.Style.cancel, handler:nil)
             alert.addAction(cancelAction)
             present(alert, animated: true, completion: nil)
             return

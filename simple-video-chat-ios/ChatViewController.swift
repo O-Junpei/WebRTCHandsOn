@@ -4,6 +4,7 @@ import Starscream
 import SwiftyJSON
 
 class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnectionDelegate, RTCEAGLVideoViewDelegate {
+    
     var websocket: WebSocket! = nil
     var websocketUri: String!
 
@@ -80,7 +81,7 @@ class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnection
     }
 
     // MARK: Button Actions
-    func callBtnTapped(sender: UIButton){
+    @objc func callBtnTapped(sender: UIButton){
         print("basicButtonBtnClicked")
         // Connectボタンを押した時
         if peerConnection == nil {
@@ -91,13 +92,13 @@ class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnection
         }
     }
     
-    func callEndBtnTapped(sender: UIButton){
+    @objc func callEndBtnTapped(sender: UIButton){
         print("basicButtonBtnClicked")
         //HangUpボタンを押した時
         hangUp()
     }
     
-    func closeBtnTapped(sender: UIButton){
+    @objc func closeBtnTapped(sender: UIButton){
         print("basicButtonBtnClicked")
         hangUp()
         websocket.disconnect()
@@ -280,13 +281,19 @@ class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnection
         LOG()
     }
 
-    func websocketDidDisconnect(socket: WebSocket,
-        error: NSError?) {
+    func websocketDidConnect(socket: WebSocketClient) {
+        LOG()
+    }
+    
+    func websocketDidDisconnect(socket: WebSocket, error: NSError?) {
+        LOG("error: \(String(describing: error?.localizedDescription))")
+    }
+    
+    func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
         LOG("error: \(String(describing: error?.localizedDescription))")
     }
 
-    func websocketDidReceiveMessage(
-        socket: WebSocket, text: String) {
+    func websocketDidReceiveMessage(socket: WebSocket, text: String) {
         LOG("message: \(text)")
         // 受け取ったメッセージをJSONとしてパース
         
@@ -322,12 +329,56 @@ class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnection
             return
         }
     }
+    func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
+        LOG("message: \(text)")
+        // 受け取ったメッセージをJSONとしてパース
+        
+        let jsonMessage = JSON(parseJSON: text)
+        let type = jsonMessage["type"].stringValue
+        switch (type) {
+        case "answer":
+            // answerを受け取った時の処理
+            LOG("Received answer ...")
+            let answer = RTCSessionDescription(
+                type: RTCSessionDescription.type(for: type),
+                sdp: jsonMessage["sdp"].stringValue)
+            setAnswer(answer)
+        case "candidate":
+            LOG("Received ICE candidate ...")
+            let candidate = RTCIceCandidate(
+                sdp: jsonMessage["ice"]["candidate"].stringValue,
+                sdpMLineIndex:
+                jsonMessage["ice"]["sdpMLineIndex"].int32Value,
+                sdpMid: jsonMessage["ice"]["sdpMid"].stringValue)
+            addIceCandidate(candidate)
+        case "offer":
+            // offerを受け取った時の処理
+            LOG("Received offer ...")
+            let offer = RTCSessionDescription(
+                type: RTCSessionDescription.type(for: type),
+                sdp: jsonMessage["sdp"].stringValue)
+            setOffer(offer)
+        case "close":
+            LOG("peer is closed ...")
+            hangUp()
+        default:
+            return
+        }
+    }
+    
+    func websocketDidReceiveData(socket: WebSocket, data: Data) {
+        LOG("data.count: \(data.count)")
+    }
+
+    func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
+        LOG("data.count: \(data.count)")
+    }
     
     
     
     
-    
-    
+    // MARK: WebSockets
+
     
     
     func setOffer(_ offer: RTCSessionDescription) {
@@ -377,11 +428,6 @@ class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnection
         }
     }
     
-    func websocketDidReceiveData(socket: WebSocket,
-        data: Data) {
-        LOG("data.count: \(data.count)")
-    }
-
     // MARK: Peer
     func peerConnection(_ peerConnection: RTCPeerConnection,
         didChange stateChanged: RTCSignalingState) {
