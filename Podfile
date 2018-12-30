@@ -6,7 +6,7 @@ target 'simple-video-chat-ios' do
   use_frameworks!
 
   # Pods for WebRTCHandsOn
-  pod 'WebRTC', '58.17.16937'
+  pod 'WebRTC'
   pod 'Starscream', '~> 2.0.3'
   pod 'SwiftyJSON'
 end
