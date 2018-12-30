@@ -289,7 +289,8 @@ class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnection
         socket: WebSocket, text: String) {
         LOG("message: \(text)")
         // 受け取ったメッセージをJSONとしてパース
-        let jsonMessage = JSON.parse(text)
+        
+        let jsonMessage = JSON(parseJSON: text)            
         let type = jsonMessage["type"].stringValue
         switch (type) {
         case "answer":
