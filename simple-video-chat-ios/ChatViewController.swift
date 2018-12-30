@@ -5,6 +5,7 @@ import SwiftyJSON
 
 class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnectionDelegate, RTCEAGLVideoViewDelegate {
     var websocket: WebSocket! = nil
+    var websocketUri: String!
 
     var cameraPreview: RTCCameraPreviewView!
     var remoteVideoView: RTCEAGLVideoView!
@@ -17,6 +18,15 @@ class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnection
     var callBtn:UIButton!
     var callEndBtn:UIButton!
     var closeBtn:UIButton!
+    
+    init(uri: String, roomName: String) {
+        super.init(nibName: nil, bundle: nil)
+        websocketUri = uri + roomName
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +46,7 @@ class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnection
         // RTCPeerConnectionFactoryの初期化
         peerConnectionFactory = RTCPeerConnectionFactory()
         startVideo()
-        websocket = WebSocket(url: URL(string: "wss://simple-video-chat.work/socket/onojun")!)
+        websocket = WebSocket(url: URL(string: websocketUri)!)
         websocket.delegate = self
         websocket.connect()
         

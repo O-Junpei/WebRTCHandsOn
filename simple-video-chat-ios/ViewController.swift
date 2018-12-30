@@ -2,67 +2,67 @@ import UIKit
 
 class ViewController: UIViewController, UITextFieldDelegate {
 
-    private var myTextField: UITextField!
+    private var textField: UITextField!
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let width = view.frame.width
+        let height = view.frame.height
         view.backgroundColor = .white
         
         // UITextFieldの作成
-        myTextField = UITextField()
-        
-        //大きさと位置の指定
-        myTextField.frame = CGRect(x: 50, y: 50, width: 200, height: 50)
-        
-        // 表示する文字を代入する
-        myTextField.text = "myTextField"
-        
-        // Delegate設定
-        myTextField.delegate = self
-        
-        // 枠を表示する.
-        myTextField.borderStyle = UITextBorderStyle.roundedRect
-        
-        // クリアボタンを追加.
-        myTextField.clearButtonMode = .whileEditing
-        
-        // Viewに追加する
-        self.view.addSubview(myTextField)
+        textField = UITextField()
+        textField.frame.size = CGSize(width: 260, height: 60)
+        textField.center.x = width / 2
+        textField.center.y = height / 2 - 60
+        textField.delegate = self
+        textField.textAlignment = .center
+        textField.placeholder = "room name"
+        textField.borderStyle = UITextBorderStyle.roundedRect
+        textField.clearButtonMode = .whileEditing
+        view.addSubview(textField)
         
         //ボタンの生成
         let basicButton = UIButton()
-        basicButton.frame = CGRect(x: 60, y: view.frame.height * 0.6, width: view.frame.width - 120, height: 40)
+        basicButton.frame.size = CGSize(width: 260, height: 60)
         basicButton.backgroundColor = UIColor.gray
-        basicButton.addTarget(self, action: #selector(basicButtonClicked(sender:)), for:.touchUpInside)
-        basicButton.setTitle("通話開始", for: UIControlState.normal)
+        basicButton.center.x = width / 2
+        basicButton.center.y = height / 2 + 60
+        basicButton.addTarget(self, action: #selector(taped(sender:)), for:.touchUpInside)
+        basicButton.setTitle("join room", for: UIControlState.normal)
         basicButton.setTitleColor(UIColor.white, for: UIControlState.normal)
-        self.view.addSubview(basicButton)
+        view.addSubview(basicButton)
     }
 
-    //basicボタンが押されたら呼ばれます
-     func basicButtonClicked(sender: UIButton){
-        print("basicButtonBtnClicked")
-        self.navigationController?.pushViewController(ChatViewController(), animated: true)
+    //MARK: Button Action
+     func taped(sender: UIButton){
+        var title:String!
+        let text = textField.text!
+        if text.isEmpty {
+            title = "Input room name"
+        } else if text.utf8.count < 4 {
+            title = "Room name must be at least 4 letters"
+        }
+        
+        
+        if let title = title {
+            let alert: UIAlertController = UIAlertController(title: title, message: "", preferredStyle:  UIAlertControllerStyle.alert)
+            let cancelAction: UIAlertAction = UIAlertAction(title: "close", style: UIAlertActionStyle.cancel, handler:nil)
+            alert.addAction(cancelAction)
+            present(alert, animated: true, completion: nil)
+            return
+        }
+        
+
+        
+        let vc = ChatViewController(uri: "wss://simple-video-chat.work/socket/",roomName: text)
+        navigationController?.pushViewController(vc, animated: true)
     }
     
-    //UITextFieldが編集された前に呼ばれる
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        print("textFieldDidBeginEditing: \(textField.text!)")
-    }
-    
-    //UITextFieldが編集された後に呼ばれる
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        print("textFieldDidEndEditing: \(textField.text!)")
-    }
-    
-    //改行ボタンが押された際に呼ばれる
+    //MARK: TextView Delegate Methods
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        print("textFieldShouldReturn \(textField.text!)")
-        
-        // 改行ボタンが押されたらKeyboardを閉じる処理.
         textField.resignFirstResponder()
-        
         return true
     }
 }
