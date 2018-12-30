@@ -1,6 +1,6 @@
 PODS:
   - Starscream (2.0.4)
-  - SwiftyJSON (3.1.4)
+  - SwiftyJSON (4.2.0)
   - WebRTC (58.17.16937)
 
 DEPENDENCIES:
@@ -16,7 +16,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Starscream: df5974ee928b157c8eda8af8de7c620276b7dfcc
-  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
+  SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
   WebRTC: 1e9a85bf75509eec44be6478c64e9de65ac82332
 
 PODFILE CHECKSUM: 31cf8794a76f011ba95f5a7b2bfa3337686a8a7a
