@@ -3,7 +3,7 @@ import WebRTC
 import Starscream
 import SwiftyJSON
 
-class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnectionDelegate, RTCEAGLVideoViewDelegate {
+class ChatViewController: UIViewController {
 
     var viewWidth: CGFloat!
     var viewHeight: CGFloat!
@@ -131,7 +131,7 @@ class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnection
     @objc func closeBtnTapped(sender: UIButton) {
         hangUp()
         websocket.disconnect()
-        self.navigationController?.popToRootViewController(animated: true)
+        navigationController?.popToRootViewController(animated: true)
     }
 
     func LOG(_ body: String = "", function: String = #function, line: Int = #line) {
@@ -292,59 +292,6 @@ class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnection
         return peerConnection
     }
 
-
-    // MARK: WebSockets
-    func websocketDidConnect(socket: WebSocketClient) {
-        LOG()
-    }
-
-    func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
-        LOG("error: \(String(describing: error?.localizedDescription))")
-    }
-
-    func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
-        LOG("message: \(text)")
-        // 受け取ったメッセージをJSONとしてパース
-
-        let jsonMessage = JSON(parseJSON: text)
-        let type = jsonMessage["type"].stringValue
-        switch (type) {
-        case "answer":
-            // answerを受け取った時の処理
-            LOG("Received answer ...")
-            let answer = RTCSessionDescription(
-                type: RTCSessionDescription.type(for: type),
-                sdp: jsonMessage["sdp"].stringValue)
-            setAnswer(answer)
-        case "candidate":
-            LOG("Received ICE candidate ...")
-            let candidate = RTCIceCandidate(
-                sdp: jsonMessage["ice"]["candidate"].stringValue,
-                sdpMLineIndex:
-                    jsonMessage["ice"]["sdpMLineIndex"].int32Value,
-                sdpMid: jsonMessage["ice"]["sdpMid"].stringValue)
-            addIceCandidate(candidate)
-        case "offer":
-            // offerを受け取った時の処理
-            LOG("Received offer ...")
-            let offer = RTCSessionDescription(
-                type: RTCSessionDescription.type(for: type),
-                sdp: jsonMessage["sdp"].stringValue)
-            setOffer(offer)
-        case "close":
-            LOG("peer is closed ...")
-            hangUp()
-        default:
-            return
-        }
-    }
-
-    func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
-        LOG("data.count: \(data.count)")
-    }
-
-
-
     // MARK: WebSockets
     func setOffer(_ offer: RTCSessionDescription) {
         if peerConnection != nil {
@@ -394,14 +341,68 @@ class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnection
     }
 
     // MARK: Peer
-    func peerConnection(_ peerConnection: RTCPeerConnection,
-        didChange stateChanged: RTCSignalingState) {
-        // 接続情報交換の状況が変化した際に呼ばれます
+    
 
+}
+
+// MARK: WebSockets
+extension ChatViewController: WebSocketDelegate {
+    func websocketDidConnect(socket: WebSocketClient) {
+        LOG()
     }
+    
+    func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
+        LOG("error: \(String(describing: error?.localizedDescription))")
+    }
+    
+    func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
+        LOG("message: \(text)")
+        // 受け取ったメッセージをJSONとしてパース
+        
+        let jsonMessage = JSON(parseJSON: text)
+        let type = jsonMessage["type"].stringValue
+        switch (type) {
+        case "answer":
+            // answerを受け取った時の処理
+            LOG("Received answer ...")
+            let answer = RTCSessionDescription(
+                type: RTCSessionDescription.type(for: type),
+                sdp: jsonMessage["sdp"].stringValue)
+            setAnswer(answer)
+        case "candidate":
+            LOG("Received ICE candidate ...")
+            let candidate = RTCIceCandidate(
+                sdp: jsonMessage["ice"]["candidate"].stringValue,
+                sdpMLineIndex:
+                jsonMessage["ice"]["sdpMLineIndex"].int32Value,
+                sdpMid: jsonMessage["ice"]["sdpMid"].stringValue)
+            addIceCandidate(candidate)
+        case "offer":
+            // offerを受け取った時の処理
+            LOG("Received offer ...")
+            let offer = RTCSessionDescription(
+                type: RTCSessionDescription.type(for: type),
+                sdp: jsonMessage["sdp"].stringValue)
+            setOffer(offer)
+        case "close":
+            LOG("peer is closed ...")
+            hangUp()
+        default:
+            return
+        }
+    }
+    
+    func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
+        LOG("data.count: \(data.count)")
+    }
+}
 
-    func peerConnection(_ peerConnection: RTCPeerConnection,
-        didAdd stream: RTCMediaStream) {
+extension ChatViewController: RTCPeerConnectionDelegate, RTCEAGLVideoViewDelegate {
+    func peerConnection(_ peerConnection: RTCPeerConnection, didChange stateChanged: RTCSignalingState) {
+        // 接続情報交換の状況が変化した際に呼ばれます
+    }
+    
+    func peerConnection(_ peerConnection: RTCPeerConnection, didAdd stream: RTCMediaStream) {
         // 映像/音声が追加された際に呼ばれます
         LOG("-- peer.onaddstream()")
         DispatchQueue.main.async(execute: { () -> Void in
@@ -414,19 +415,16 @@ class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnection
             }
         })
     }
-
-    func peerConnection(_ peerConnection: RTCPeerConnection,
-        didRemove stream: RTCMediaStream) {
+    
+    func peerConnection(_ peerConnection: RTCPeerConnection, didRemove stream: RTCMediaStream) {
         // 映像/音声削除された際に呼ばれます
     }
-
-    func peerConnectionShouldNegotiate(_
-        peerConnection: RTCPeerConnection) {
+    
+    func peerConnectionShouldNegotiate(_ peerConnection: RTCPeerConnection) {
         // 接続情報の交換が必要になった際に呼ばれます
     }
-
-    func peerConnection(_ peerConnection: RTCPeerConnection,
-        didChange newState: RTCIceConnectionState) {
+    
+    func peerConnection(_ peerConnection: RTCPeerConnection, didChange newState: RTCIceConnectionState) {
         // PeerConnectionの接続状況が変化した際に呼ばれます
         var state = ""
         switch (newState) {
@@ -449,14 +447,12 @@ class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnection
         }
         LOG("ICE connection Status has changed to \(state)")
     }
-
-    func peerConnection(_ peerConnection: RTCPeerConnection,
-        didChange newState: RTCIceGatheringState) {
+    
+    func peerConnection(_ peerConnection: RTCPeerConnection, didChange newState: RTCIceGatheringState) {
         // 接続先候補の探索状況が変化した際に呼ばれます
     }
-
-    func peerConnection(_ peerConnection: RTCPeerConnection,
-        didGenerate candidate: RTCIceCandidate) {
+    
+    func peerConnection(_ peerConnection: RTCPeerConnection, didGenerate candidate: RTCIceCandidate) {
         // Candidate(自分への接続先候補情報)が生成された際に呼ばれます
         if candidate.sdpMid != nil {
             sendIceCandidate(candidate)
@@ -464,21 +460,19 @@ class ChatViewController: UIViewController, WebSocketDelegate, RTCPeerConnection
             LOG("empty ice event")
         }
     }
-
-    func peerConnection(_ peerConnection: RTCPeerConnection,
-        didOpen dataChannel: RTCDataChannel) {
+    
+    func peerConnection(_ peerConnection: RTCPeerConnection, didOpen dataChannel: RTCDataChannel) {
         // DataChannelが作られた際に呼ばれます
     }
-
-    func peerConnection(_ peerConnection: RTCPeerConnection,
-        didRemove candidates: [RTCIceCandidate]) {
+    
+    func peerConnection(_ peerConnection: RTCPeerConnection, didRemove candidates: [RTCIceCandidate]) {
         // Candidateが削除された際に呼ばれます
     }
-
+    
     func videoView(_ videoView: RTCEAGLVideoView, didChangeVideoSize size: CGSize) {
         let videoAspect = size.width / size.height
         let viewAspect = viewWidth / viewHeight
-
+        
         //TODO:  後で考える
         if viewAspect > videoAspect {
             videoView.frame.size = CGSize(width: viewHeight / videoAspect, height: viewHeight)

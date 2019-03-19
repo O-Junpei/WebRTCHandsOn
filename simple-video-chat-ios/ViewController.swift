@@ -7,39 +7,43 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = .white
         let width = view.frame.width
         let height = view.frame.height
-        view.backgroundColor = .white
         
-        // UITextFieldの作成
+        // Initialize TextView
         textField = UITextField()
+        textField.delegate = self
         textField.frame.size = CGSize(width: 260, height: 60)
         textField.center.x = width / 2
         textField.center.y = height / 2 - 60
-        textField.delegate = self
         textField.textAlignment = .center
         textField.placeholder = "room name"
-        textField.borderStyle = UITextField.BorderStyle.roundedRect
         textField.clearButtonMode = .whileEditing
         textField.keyboardType = .alphabet
+        textField.layer.borderWidth = 0.5
+        textField.layer.borderColor = UIColor.gray.withAlphaComponent(0.5).cgColor
+        textField.layer.cornerRadius = 8
         view.addSubview(textField)
         
-        //ボタンの生成
-        let basicButton = UIButton()
-        basicButton.frame.size = CGSize(width: 260, height: 60)
-        basicButton.backgroundColor = UIColor.lightGray
-        basicButton.center.x = width / 2
-        basicButton.center.y = height / 2 + 60
-        basicButton.addTarget(self, action: #selector(taped(sender:)), for:.touchUpInside)
-        basicButton.setTitle("join room", for: UIControl.State.normal)
-        basicButton.setTitleColor(UIColor.white, for: UIControl.State.normal)
-        view.addSubview(basicButton)
+        // Initialize Button
+        let button = UIButton()
+        button.frame.size = CGSize(width: 260, height: 60)
+        button.backgroundColor = UIColor.lightGray
+        button.layer.cornerRadius = 8
+        button.center.x = width / 2
+        button.center.y = height / 2 + 60
+        button.addTarget(self, action: #selector(taped(sender:)), for:.touchUpInside)
+        button.setTitle("join room", for: UIControl.State.normal)
+        button.setTitleColor(UIColor.white, for: UIControl.State.normal)
+        view.addSubview(button)
     }
 
     //MARK: Button Action
      @objc func taped(sender: UIButton){
-        var title:String!
-        let text = textField.text!
+        guard let text = textField.text else { return }
+        
+        var title: String?
         if text.isEmpty {
             title = "Input room name"
         } else if text.utf8.count < 4 {
