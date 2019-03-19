@@ -1,22 +1,18 @@
 import UIKit
 
-class ViewController: UIViewController {
+class SelectRoomViewController: UIViewController {
 
     private var textField: UITextField!
-
+    private var button: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .white
-        let width = view.frame.width
-        let height = view.frame.height
         
         // Initialize TextView
         textField = UITextField()
         textField.delegate = self
-        textField.frame.size = CGSize(width: 260, height: 60)
-        textField.center.x = width / 2
-        textField.center.y = height / 2 - 60
         textField.textAlignment = .center
         textField.placeholder = "room name"
         textField.clearButtonMode = .whileEditing
@@ -27,18 +23,30 @@ class ViewController: UIViewController {
         view.addSubview(textField)
         
         // Initialize Button
-        let button = UIButton()
-        button.frame.size = CGSize(width: 260, height: 60)
+        button = UIButton()
         button.backgroundColor = UIColor.lightGray
         button.layer.cornerRadius = 8
-        button.center.x = width / 2
-        button.center.y = height / 2 + 60
         button.addTarget(self, action: #selector(taped(sender:)), for:.touchUpInside)
         button.setTitle("join room", for: UIControl.State.normal)
         button.setTitleColor(UIColor.white, for: UIControl.State.normal)
         view.addSubview(button)
     }
 
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        let width = view.frame.width
+        let height = view.frame.height
+        
+        textField.frame.size = CGSize(width: 260, height: 60)
+        textField.center.x = width / 2
+        textField.center.y = height / 2 - 100
+    
+        button.frame.size = CGSize(width: 260, height: 60)
+        button.center.x = width / 2
+        button.center.y = height / 2
+    }
+    
     //MARK: Button Action
      @objc func taped(sender: UIButton){
         guard let text = textField.text else { return }
@@ -58,13 +66,14 @@ class ViewController: UIViewController {
             return
         }
     
+        textField.resignFirstResponder()
         let vc = ChatViewController(uri: WEBSOCKET_URI,roomName: text)
         navigationController?.pushViewController(vc, animated: true)
     }
 }
 
 //MARK: TextView Delegate Methods
-extension ViewController: UITextFieldDelegate {
+extension SelectRoomViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true

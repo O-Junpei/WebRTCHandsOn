@@ -9,7 +9,6 @@ class ChatViewController: UIViewController {
     var viewHeight: CGFloat!
     var topSafeAreaHeight: CGFloat = 0
     var bottomSafeAreaHeight: CGFloat = 0
-    let buttonSize: CGFloat = 80
     
     var websocket: WebSocket! = nil
     var websocketUri: String!
@@ -23,7 +22,7 @@ class ChatViewController: UIViewController {
     var remoteVideoTrack: RTCVideoTrack?
 
     var callBtn: UIButton!
-    var callEndBtn: UIButton!
+    var hangUpBtn: UIButton!
     var closeBtn: UIButton!
 
     init(uri: String, roomName: String) {
@@ -64,83 +63,87 @@ class ChatViewController: UIViewController {
         // RTCPeerConnectionFactoryの初期化
         peerConnectionFactory = RTCPeerConnectionFactory()
         startVideo()
+        
+        // WebSocketの初期化
         websocket = WebSocket(url: URL(string: websocketUri)!)
         websocket.delegate = self
         websocket.connect()
 
-        // button
+        // Initialize Call Button
         callBtn = UIButton()
         callBtn.backgroundColor = UIColor.lightGray
-        callBtn.addTarget(self, action: #selector(callBtnTapped(sender:)), for: .touchUpInside)
+        callBtn.addTarget(self, action: #selector(callBtnOnTap), for: .touchUpInside)
         callBtn.layer.masksToBounds = true
-        callBtn.layer.cornerRadius = 40
         callBtn.setImage(UIImage(named: "call"), for: .normal)
         view.addSubview(callBtn)
 
-        callEndBtn = UIButton()
-        callEndBtn.backgroundColor = UIColor.lightGray
-        callEndBtn.addTarget(self, action: #selector(callEndBtnTapped(sender:)), for: .touchUpInside)
-        callEndBtn.layer.masksToBounds = true
-        callEndBtn.layer.cornerRadius = 40
-        callEndBtn.setImage(UIImage(named: "call-end"), for: .normal)
-        view.addSubview(callEndBtn)
+        // Initialize Call Button
+        hangUpBtn = UIButton()
+        hangUpBtn.backgroundColor = UIColor.lightGray
+        hangUpBtn.addTarget(self, action: #selector(hangUpBtnOnTap), for: .touchUpInside)
+        hangUpBtn.layer.masksToBounds = true
+        hangUpBtn.setImage(UIImage(named: "call-end"), for: .normal)
+        view.addSubview(hangUpBtn)
 
+        // Initialize Close Button
         closeBtn = UIButton()
         closeBtn.backgroundColor = UIColor.lightGray
-        closeBtn.addTarget(self, action: #selector(closeBtnTapped(sender:)), for: .touchUpInside)
+        closeBtn.setTitle("←", for: .normal)
+        closeBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
+        closeBtn.setTitleColor(.black, for: .normal)
+        closeBtn.addTarget(self, action: #selector(closeBtnOnTap), for: .touchUpInside)
         view.addSubview(closeBtn)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
+        let buttonSize: CGFloat = 80
         let margin:CGFloat = 16
-        let sideMargin:CGFloat = 32
+        let sideMargin:CGFloat = 28
         topSafeAreaHeight = view.safeAreaInsets.top
         bottomSafeAreaHeight = view.safeAreaInsets.bottom
         
-        closeBtn.frame = CGRect(x: sideMargin, y: topSafeAreaHeight, width: 40, height: 40)
-
+        closeBtn.frame = CGRect(x: sideMargin, y: topSafeAreaHeight, width: 48, height: 48)
+        closeBtn.layer.cornerRadius = 24
         
         callBtn.frame = CGRect(
             x: sideMargin,
             y: viewHeight - (buttonSize + bottomSafeAreaHeight + margin),
             width: buttonSize, height: buttonSize)
-        callEndBtn.frame = CGRect(
+        callBtn.layer.cornerRadius = buttonSize / 2
+        
+        hangUpBtn.frame = CGRect(
             x: viewWidth - (buttonSize + sideMargin),
             y: viewHeight - (buttonSize + bottomSafeAreaHeight + margin),
             width: buttonSize, height: buttonSize)
+        hangUpBtn.layer.cornerRadius = buttonSize / 2
     }
 
     // MARK: Button Actions
-    @objc func callBtnTapped(sender: UIButton) {
+    @objc func callBtnOnTap() {
         print("basicButtonBtnClicked")
         // Connectボタンを押した時
         if peerConnection == nil {
-            LOG("make Offer")
+            log("make Offer")
             makeOffer()
         } else {
-            LOG("peer already exist.")
+            log("peer already exist.")
         }
     }
 
-    @objc func callEndBtnTapped(sender: UIButton) {
+    @objc func hangUpBtnOnTap() {
         hangUp()
     }
 
-    @objc func closeBtnTapped(sender: UIButton) {
+    @objc func closeBtnOnTap() {
         hangUp()
         websocket.disconnect()
         navigationController?.popToRootViewController(animated: true)
     }
 
-    func LOG(_ body: String = "", function: String = #function, line: Int = #line) {
-        print("[\(function) : \(line)] \(body)")
-    }
-
     func setAnswer(_ answer: RTCSessionDescription) {
         if peerConnection == nil {
-            LOG("peerConnection NOT exist!")
+            log("peerConnection NOT exist!")
             return
         }
         // 受け取ったSDPを相手のSDPとして設定
@@ -148,9 +151,9 @@ class ChatViewController: UIViewController {
             completionHandler: {
                 (error: Error?) in
                 if error == nil {
-                    self.LOG("setRemoteDescription(answer) succsess")
+                    self.log("setRemoteDescription(answer) succsess")
                 } else {
-                    self.LOG("setRemoteDescription(answer) ERROR: " + error.debugDescription)
+                    self.log("setRemoteDescription(answer) ERROR: " + error.debugDescription)
                 }
             })
     }
@@ -162,17 +165,17 @@ class ChatViewController: UIViewController {
                 let jsonClose: JSON = [
                     "type": "close"
                 ]
-                LOG("sending close message")
+                log("sending close message")
                 websocket.write(string: jsonClose.rawString()!)
             }
             remoteVideoTrack = nil
             peerConnection = nil
-            LOG("peerConnection is closed.")
+            log("peerConnection is closed.")
         }
     }
 
     func sendIceCandidate(_ candidate: RTCIceCandidate) {
-        LOG("---sending ICE candidate ---")
+        log("---sending ICE candidate ---")
         let jsonCandidate: JSON = [
             "type": "candidate",
             "ice": [
@@ -182,12 +185,12 @@ class ChatViewController: UIViewController {
             ]
         ]
         let message = jsonCandidate.rawString()!
-        LOG("sending candidate=" + message)
+        log("sending candidate=" + message)
         websocket.write(string: message)
     }
 
     func sendSDP(_ desc: RTCSessionDescription) {
-        LOG("---sending sdp ---")
+        log("---sending sdp ---")
         let jsonSdp: JSON = [
             "sdp": desc.sdp, // SDP本体
             "type": RTCSessionDescription.string(
@@ -195,12 +198,7 @@ class ChatViewController: UIViewController {
         ]
         // JSONを生成
         let message = jsonSdp.rawString()!
-        LOG("sending SDP=" + message)
-        // 相手に送信
-        print("@@@@@@@@@@")
-        print(message)
-        print("@@@@@@@@@@")
-
+        log("sending SDP=" + message)
         websocket.write(string: message)
     }
 
@@ -217,12 +215,12 @@ class ChatViewController: UIViewController {
             (offer: RTCSessionDescription?, error: Error?) in
             // Offerの生成が完了した際の処理
             if error != nil { return }
-            self.LOG("createOffer() succsess")
+            self.log("createOffer() succsess")
 
             let setLocalDescCompletion = { (error: Error?) in
                 // setLocalDescCompletionが完了した際の処理
                 if error != nil { return }
-                self.LOG("setLocalDescription() succsess")
+                self.log("setLocalDescription() succsess")
                 // 相手に送る
                 self.sendSDP(offer!)
             }
@@ -267,7 +265,6 @@ class ChatViewController: UIViewController {
         // PeerConnectionの初期化
         peerConnection = peerConnectionFactory.peerConnection(
             with: configuration, constraints: peerConnectionConstraints, delegate: self)
-        //...つづく...
 
         // 音声トラックの作成
         let localAudioTrack = peerConnectionFactory
@@ -295,34 +292,34 @@ class ChatViewController: UIViewController {
     // MARK: WebSockets
     func setOffer(_ offer: RTCSessionDescription) {
         if peerConnection != nil {
-            LOG("peerConnection alreay exist!")
+            log("peerConnection alreay exist!")
         }
         // PeerConnectionを生成する
         peerConnection = prepareNewConnection()
         self.peerConnection.setRemoteDescription(offer, completionHandler: { (error: Error?) in
             if error == nil {
-                self.LOG("setRemoteDescription(offer) succsess")
+                self.log("setRemoteDescription(offer) succsess")
                 // setRemoteDescriptionが成功したらAnswerを作る
                 self.makeAnswer()
             } else {
-                self.LOG("setRemoteDescription(offer) ERROR: " + error.debugDescription)
+                self.log("setRemoteDescription(offer) ERROR: " + error.debugDescription)
             }
         })
     }
 
     func makeAnswer() {
-        LOG("sending Answer. Creating remote session description...")
+        log("sending Answer. Creating remote session description...")
         if peerConnection == nil {
-            LOG("peerConnection NOT exist!")
+            log("peerConnection NOT exist!")
             return
         }
         let constraints = RTCMediaConstraints(mandatoryConstraints: nil, optionalConstraints: nil)
         let answerCompletion = { (answer: RTCSessionDescription?, error: Error?) in
             if error != nil { return }
-            self.LOG("createAnswer() succsess")
+            self.log("createAnswer() succsess")
             let setLocalDescCompletion = { (error: Error?) in
                 if error != nil { return }
-                self.LOG("setLocalDescription() succsess")
+                self.log("setLocalDescription() succsess")
                 // 相手に送る
                 self.sendSDP(answer!)
             }
@@ -336,27 +333,23 @@ class ChatViewController: UIViewController {
         if peerConnection != nil {
             peerConnection.add(candidate)
         } else {
-            LOG("PeerConnection not exist!")
+            log("PeerConnection not exist!")
         }
     }
-
-    // MARK: Peer
-    
-
 }
 
 // MARK: WebSockets
 extension ChatViewController: WebSocketDelegate {
     func websocketDidConnect(socket: WebSocketClient) {
-        LOG()
+        log("WebsocketDidConnect")
     }
     
     func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
-        LOG("error: \(String(describing: error?.localizedDescription))")
+        log("error: \(String(describing: error?.localizedDescription))")
     }
     
     func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
-        LOG("message: \(text)")
+        log("message: \(text)")
         // 受け取ったメッセージをJSONとしてパース
         
         let jsonMessage = JSON(parseJSON: text)
@@ -364,13 +357,13 @@ extension ChatViewController: WebSocketDelegate {
         switch (type) {
         case "answer":
             // answerを受け取った時の処理
-            LOG("Received answer ...")
+            log("Received answer ...")
             let answer = RTCSessionDescription(
                 type: RTCSessionDescription.type(for: type),
                 sdp: jsonMessage["sdp"].stringValue)
             setAnswer(answer)
         case "candidate":
-            LOG("Received ICE candidate ...")
+            log("Received ICE candidate ...")
             let candidate = RTCIceCandidate(
                 sdp: jsonMessage["ice"]["candidate"].stringValue,
                 sdpMLineIndex:
@@ -379,13 +372,13 @@ extension ChatViewController: WebSocketDelegate {
             addIceCandidate(candidate)
         case "offer":
             // offerを受け取った時の処理
-            LOG("Received offer ...")
+            log("Received offer ...")
             let offer = RTCSessionDescription(
                 type: RTCSessionDescription.type(for: type),
                 sdp: jsonMessage["sdp"].stringValue)
             setOffer(offer)
         case "close":
-            LOG("peer is closed ...")
+            log("peer is closed ...")
             hangUp()
         default:
             return
@@ -393,18 +386,20 @@ extension ChatViewController: WebSocketDelegate {
     }
     
     func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
-        LOG("data.count: \(data.count)")
+        log("data.count: \(data.count)")
     }
 }
 
+// MARK: PeerConnection
 extension ChatViewController: RTCPeerConnectionDelegate, RTCEAGLVideoViewDelegate {
     func peerConnection(_ peerConnection: RTCPeerConnection, didChange stateChanged: RTCSignalingState) {
         // 接続情報交換の状況が変化した際に呼ばれます
+        log("PeerConnectionDidChange")
     }
     
     func peerConnection(_ peerConnection: RTCPeerConnection, didAdd stream: RTCMediaStream) {
         // 映像/音声が追加された際に呼ばれます
-        LOG("-- peer.onaddstream()")
+        log("-- peer.onaddstream()")
         DispatchQueue.main.async(execute: { () -> Void in
             // mainスレッドで実行
             if (stream.videoTracks.count > 0) {
@@ -418,6 +413,7 @@ extension ChatViewController: RTCPeerConnectionDelegate, RTCEAGLVideoViewDelegat
     
     func peerConnection(_ peerConnection: RTCPeerConnection, didRemove stream: RTCMediaStream) {
         // 映像/音声削除された際に呼ばれます
+        log("PeerConnectionDidRemove")
     }
     
     func peerConnectionShouldNegotiate(_ peerConnection: RTCPeerConnection) {
@@ -445,7 +441,7 @@ extension ChatViewController: RTCPeerConnectionDelegate, RTCEAGLVideoViewDelegat
         default:
             break
         }
-        LOG("ICE connection Status has changed to \(state)")
+        log("ICE connection Status has changed to \(state)")
     }
     
     func peerConnection(_ peerConnection: RTCPeerConnection, didChange newState: RTCIceGatheringState) {
@@ -457,7 +453,7 @@ extension ChatViewController: RTCPeerConnectionDelegate, RTCEAGLVideoViewDelegat
         if candidate.sdpMid != nil {
             sendIceCandidate(candidate)
         } else {
-            LOG("empty ice event")
+            log("empty ice event")
         }
     }
     

@@ -1,7 +1,6 @@
 import UIKit
 import WebRTC
 
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -14,7 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
         self.window!.makeKeyAndVisible()
-        let firstViewController = ViewController()
+        let firstViewController = SelectRoomViewController()
         navigationController = UINavigationController(rootViewController: firstViewController)
         navigationController?.setNavigationBarHidden(true, animated: false)
         window!.rootViewController = navigationController

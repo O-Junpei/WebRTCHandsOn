@@ -8,8 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		175E61B52240DB8D00DE9419 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175E61B42240DB8D00DE9419 /* Config.swift */; };
+		175E61B72240E77200DE9419 /* ExtensionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175E61B62240E77200DE9419 /* ExtensionViewController.swift */; };
 		E93377FA1ED962BB0011FBC1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93377F91ED962BB0011FBC1 /* AppDelegate.swift */; };
-		E93377FC1ED962BB0011FBC1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93377FB1ED962BB0011FBC1 /* ViewController.swift */; };
+		E93377FC1ED962BB0011FBC1 /* SelectRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93377FB1ED962BB0011FBC1 /* SelectRoomViewController.swift */; };
 		E93378011ED962BB0011FBC1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E93378001ED962BB0011FBC1 /* Assets.xcassets */; };
 		E93378041ED962BB0011FBC1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E93378021ED962BB0011FBC1 /* LaunchScreen.storyboard */; };
 		E93829171ED9BFF000FD4E46 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93829161ED9BFF000FD4E46 /* ChatViewController.swift */; };
@@ -20,13 +21,14 @@
 		03F38ACDCCCA487C8D52C7EC /* Pods-WebRTCHandsOn.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WebRTCHandsOn.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WebRTCHandsOn/Pods-WebRTCHandsOn.debug.xcconfig"; sourceTree = "<group>"; };
 		06AB881D8A940A9DA8C9CBB1 /* Pods-simple-video-chat-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-simple-video-chat-ios.release.xcconfig"; path = "Pods/Target Support Files/Pods-simple-video-chat-ios/Pods-simple-video-chat-ios.release.xcconfig"; sourceTree = "<group>"; };
 		175E61B42240DB8D00DE9419 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		175E61B62240E77200DE9419 /* ExtensionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionViewController.swift; sourceTree = "<group>"; };
 		28A9AF4405E953428B143A23 /* Pods-WebRTCHandsOn.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WebRTCHandsOn.release.xcconfig"; path = "Pods/Target Support Files/Pods-WebRTCHandsOn/Pods-WebRTCHandsOn.release.xcconfig"; sourceTree = "<group>"; };
 		AF10745FA17AD353468CD464 /* Pods_WebRTCHandsOn.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WebRTCHandsOn.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9F2D3E6B78F274D4CDFC205 /* Pods-simple-video-chat-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-simple-video-chat-ios.debug.xcconfig"; path = "Pods/Target Support Files/Pods-simple-video-chat-ios/Pods-simple-video-chat-ios.debug.xcconfig"; sourceTree = "<group>"; };
 		BF019230F98A3C176D6BD623 /* Pods_simple_video_chat_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_simple_video_chat_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E93377F61ED962BB0011FBC1 /* simple-video-chat-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "simple-video-chat-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E93377F91ED962BB0011FBC1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E93377FB1ED962BB0011FBC1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		E93377FB1ED962BB0011FBC1 /* SelectRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectRoomViewController.swift; sourceTree = "<group>"; };
 		E93378001ED962BB0011FBC1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E93378031ED962BB0011FBC1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E93378051ED962BB0011FBC1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -88,7 +90,8 @@
 			children = (
 				E93377F91ED962BB0011FBC1 /* AppDelegate.swift */,
 				175E61B42240DB8D00DE9419 /* Config.swift */,
-				E93377FB1ED962BB0011FBC1 /* ViewController.swift */,
+				175E61B62240E77200DE9419 /* ExtensionViewController.swift */,
+				E93377FB1ED962BB0011FBC1 /* SelectRoomViewController.swift */,
 				E93829161ED9BFF000FD4E46 /* ChatViewController.swift */,
 				E93378001ED962BB0011FBC1 /* Assets.xcassets */,
 				E93378021ED962BB0011FBC1 /* LaunchScreen.storyboard */,
@@ -214,7 +217,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E93377FC1ED962BB0011FBC1 /* ViewController.swift in Sources */,
+				E93377FC1ED962BB0011FBC1 /* SelectRoomViewController.swift in Sources */,
+				175E61B72240E77200DE9419 /* ExtensionViewController.swift in Sources */,
 				175E61B52240DB8D00DE9419 /* Config.swift in Sources */,
 				E93829171ED9BFF000FD4E46 /* ChatViewController.swift in Sources */,
 				E93377FA1ED962BB0011FBC1 /* AppDelegate.swift in Sources */,
