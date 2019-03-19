@@ -1,6 +1,6 @@
 import UIKit
 
-class ViewController: UIViewController, UITextFieldDelegate {
+class ViewController: UIViewController {
 
     private var textField: UITextField!
 
@@ -47,18 +47,20 @@ class ViewController: UIViewController, UITextFieldDelegate {
         }
         
         if let title = title {
-            let alert: UIAlertController = UIAlertController(title: title, message: "", preferredStyle:  UIAlertController.Style.alert)
-            let cancelAction: UIAlertAction = UIAlertAction(title: "close", style: UIAlertAction.Style.cancel, handler:nil)
+            let alert = UIAlertController(title: title, message: "", preferredStyle:  UIAlertController.Style.alert)
+            let cancelAction = UIAlertAction(title: "close", style: UIAlertAction.Style.cancel, handler:nil)
             alert.addAction(cancelAction)
             present(alert, animated: true, completion: nil)
             return
         }
     
-        let vc = ChatViewController(uri: "wss://simple-video-chat.work/socket/",roomName: text)
+        let vc = ChatViewController(uri: WEBSOCKET_URI,roomName: text)
         navigationController?.pushViewController(vc, animated: true)
     }
-    
-    //MARK: TextView Delegate Methods
+}
+
+//MARK: TextView Delegate Methods
+extension ViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
