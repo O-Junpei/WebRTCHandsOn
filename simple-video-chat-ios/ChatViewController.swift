@@ -48,7 +48,6 @@ class ChatViewController: UIViewController {
         view.addSubview(remoteVideoView)
 
         cameraPreview = RTCCameraPreviewView()
-        cameraPreview.frame = CGRect(x: view.frame.width - 100, y: 20, width: 60, height: 100)
         view.addSubview(cameraPreview)
 
         // RTCPeerConnectionFactoryの初期化
@@ -92,13 +91,16 @@ class ChatViewController: UIViewController {
         let width = view.frame.width
         let height = view.frame.height
         let buttonSize: CGFloat = 80
-        let margin:CGFloat = 16
+        let previewSize = CGSize(width: 60, height: 100)
+        let margin:CGFloat = 12
         let sideMargin:CGFloat = 28
         let topSafeAreaHeight = view.safeAreaInsets.top
         let bottomSafeAreaHeight = view.safeAreaInsets.bottom
         
         closeBtn.frame = CGRect(x: sideMargin, y: topSafeAreaHeight, width: 48, height: 48)
         closeBtn.layer.cornerRadius = 24
+        
+        cameraPreview.frame = CGRect(x: width - previewSize.width - sideMargin, y: topSafeAreaHeight, width: previewSize.width, height: previewSize.height)
         
         hangUpBtn.frame = CGRect(
             x: sideMargin,
@@ -468,7 +470,7 @@ extension ChatViewController: RTCPeerConnectionDelegate, RTCEAGLVideoViewDelegat
         
         //TODO:  後で考える
         if viewAspect > videoAspect {
-            videoView.frame.size = CGSize(width: width / videoAspect, height: height)
+            videoView.frame.size = CGSize(width: height / videoAspect, height: height)
         } else {
             videoView.frame.size = CGSize(width: width, height: width * videoAspect)
         }
