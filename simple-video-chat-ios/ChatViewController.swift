@@ -71,7 +71,7 @@ class ChatViewController: UIViewController {
 
         // Initialize Call Button
         callBtn = UIButton()
-        callBtn.backgroundColor = UIColor.lightGray
+        callBtn.backgroundColor = UIColor(named: "call-green")
         callBtn.addTarget(self, action: #selector(callBtnOnTap), for: .touchUpInside)
         callBtn.layer.masksToBounds = true
         callBtn.setImage(UIImage(named: "call"), for: .normal)
@@ -79,7 +79,7 @@ class ChatViewController: UIViewController {
 
         // Initialize Call Button
         hangUpBtn = UIButton()
-        hangUpBtn.backgroundColor = UIColor.lightGray
+        hangUpBtn.backgroundColor = UIColor(named: "call-red")
         hangUpBtn.addTarget(self, action: #selector(hangUpBtnOnTap), for: .touchUpInside)
         hangUpBtn.layer.masksToBounds = true
         hangUpBtn.setImage(UIImage(named: "call-end"), for: .normal)
