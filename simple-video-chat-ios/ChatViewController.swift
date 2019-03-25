@@ -4,11 +4,6 @@ import Starscream
 import SwiftyJSON
 
 class ChatViewController: UIViewController {
-
-    var viewWidth: CGFloat!
-    var viewHeight: CGFloat!
-    var topSafeAreaHeight: CGFloat = 0
-    var bottomSafeAreaHeight: CGFloat = 0
     
     var websocket: WebSocket! = nil
     var websocketUri: String!
@@ -46,13 +41,9 @@ class ChatViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        
-        viewWidth = view.frame.width
-        viewHeight = view.frame.height
 
         remoteVideoView = RTCEAGLVideoView()
         remoteVideoView.delegate = self
-        // remoteVideoView.frame = view.frame
         remoteVideoView.backgroundColor = .white
         view.addSubview(remoteVideoView)
 
@@ -87,36 +78,39 @@ class ChatViewController: UIViewController {
 
         // Initialize Close Button
         closeBtn = UIButton()
-        closeBtn.backgroundColor = UIColor.lightGray
+        closeBtn.backgroundColor = .lightGray
         closeBtn.setTitle("←", for: .normal)
+        closeBtn.setTitleColor(.white, for: .normal)
         closeBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
-        closeBtn.setTitleColor(.black, for: .normal)
         closeBtn.addTarget(self, action: #selector(closeBtnOnTap), for: .touchUpInside)
         view.addSubview(closeBtn)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
+        let width = view.frame.width
+        let height = view.frame.height
         let buttonSize: CGFloat = 80
         let margin:CGFloat = 16
         let sideMargin:CGFloat = 28
-        topSafeAreaHeight = view.safeAreaInsets.top
-        bottomSafeAreaHeight = view.safeAreaInsets.bottom
+        let topSafeAreaHeight = view.safeAreaInsets.top
+        let bottomSafeAreaHeight = view.safeAreaInsets.bottom
         
         closeBtn.frame = CGRect(x: sideMargin, y: topSafeAreaHeight, width: 48, height: 48)
         closeBtn.layer.cornerRadius = 24
         
-        callBtn.frame = CGRect(
-            x: sideMargin,
-            y: viewHeight - (buttonSize + bottomSafeAreaHeight + margin),
-            width: buttonSize, height: buttonSize)
-        callBtn.layer.cornerRadius = buttonSize / 2
-        
         hangUpBtn.frame = CGRect(
-            x: viewWidth - (buttonSize + sideMargin),
-            y: viewHeight - (buttonSize + bottomSafeAreaHeight + margin),
+            x: sideMargin,
+            y: height - (buttonSize + bottomSafeAreaHeight + margin),
             width: buttonSize, height: buttonSize)
         hangUpBtn.layer.cornerRadius = buttonSize / 2
+        
+        callBtn.frame = CGRect(
+            x: width - (buttonSize + sideMargin),
+            y: height - (buttonSize + bottomSafeAreaHeight + margin),
+            width: buttonSize, height: buttonSize)
+        callBtn.layer.cornerRadius = buttonSize / 2
     }
 
     // MARK: Button Actions
@@ -466,14 +460,17 @@ extension ChatViewController: RTCPeerConnectionDelegate, RTCEAGLVideoViewDelegat
     }
     
     func videoView(_ videoView: RTCEAGLVideoView, didChangeVideoSize size: CGSize) {
+        let width = view.frame.width
+        let height = view.frame.height
+        
         let videoAspect = size.width / size.height
-        let viewAspect = viewWidth / viewHeight
+        let viewAspect = width / height
         
         //TODO:  後で考える
         if viewAspect > videoAspect {
-            videoView.frame.size = CGSize(width: viewHeight / videoAspect, height: viewHeight)
+            videoView.frame.size = CGSize(width: width / videoAspect, height: height)
         } else {
-            videoView.frame.size = CGSize(width: viewWidth, height: viewWidth * videoAspect)
+            videoView.frame.size = CGSize(width: width, height: width * videoAspect)
         }
         videoView.center = view.center
         videoView.clipsToBounds = true
