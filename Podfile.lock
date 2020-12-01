@@ -9,7 +9,7 @@ DEPENDENCIES:
   - WebRTC
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - Starscream
     - SwiftyJSON
     - WebRTC
@@ -21,4 +21,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 7392ff8b962be9313bfefc504be5bbb0eeb8674d
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.9.3

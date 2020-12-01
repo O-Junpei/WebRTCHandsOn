@@ -134,8 +134,9 @@
 				TargetAttributes = {
 					E93377F51ED962BB0011FBC1 = {
 						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = 5RH346BQ66;
 						LastSwiftMigration = 1010;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -144,6 +145,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -176,7 +178,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-simple-video-chat-ios/Pods-simple-video-chat-ios-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-simple-video-chat-ios/Pods-simple-video-chat-ios-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${PODS_ROOT}/WebRTC/WebRTC.framework",
@@ -189,7 +191,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-simple-video-chat-ios/Pods-simple-video-chat-ios-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-simple-video-chat-ios/Pods-simple-video-chat-ios-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		CDDD50B796CFF6C57BD56779 /* [CP] Check Pods Manifest.lock */ = {
@@ -355,9 +357,9 @@
 			baseConfigurationReference = B9F2D3E6B78F274D4CDFC205 /* Pods-simple-video-chat-ios.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5RH346BQ66;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "simple-video-chat-ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -375,9 +377,9 @@
 			baseConfigurationReference = 06AB881D8A940A9DA8C9CBB1 /* Pods-simple-video-chat-ios.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5RH346BQ66;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "simple-video-chat-ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
